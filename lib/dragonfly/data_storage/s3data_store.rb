@@ -74,7 +74,7 @@ module Dragonfly
           storage.get_object_url(bucket_name, uid, opts[:expires])
         else
           if cloudfront_distribution
-            "#{cloudfront_distribution}/#{bucket_name}/#{uid}"
+            "#{cloudfront_distribution}/#{uid}"
           else
             "https://s3.amazonaws.com/#{bucket_name}/#{uid}"
           end
