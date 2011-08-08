@@ -9,6 +9,7 @@ module Dragonfly
       include Serializer
 
       configurable_attr :bucket_name
+      configurable_attr :cloudfront_distribution
       configurable_attr :access_key_id
       configurable_attr :secret_access_key
       configurable_attr :use_filesystem, true
@@ -23,6 +24,7 @@ module Dragonfly
       }
 
       def initialize(opts={})
+        self.cloudfront = opts[:cloudfront_distribution]
         self.bucket_name = opts[:bucket_name]
         self.access_key_id = opts[:access_key_id]
         self.secret_access_key = opts[:secret_access_key]
@@ -71,7 +73,11 @@ module Dragonfly
         if opts && opts[:expires]
           storage.get_object_url(bucket_name, uid, opts[:expires])
         else
-          "https://s3.amazonaws.com/#{bucket_name}/#{uid}"
+          if cloudfront_distribution
+            "#{cloudfront_distribution}/#{bucket_name}/#{uid}"
+          else
+            "https://s3.amazonaws.com/#{bucket_name}/#{uid}"
+          end
         end
       end
 
