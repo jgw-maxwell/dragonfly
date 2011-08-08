@@ -14,7 +14,7 @@ module Dragonfly
       configurable_attr :secret_access_key
       configurable_attr :use_filesystem, true
       configurable_attr :region
-      configurable_attr :storage_headers, {'x-amz-acl' => 'public-read'}
+      configurable_attr :storage_headers, {'x-amz-acl' => 'public-read', 'Cache-Control' => 'max-age=7257600'}
 
       REGIONS = {
         'us-east-1'      => 's3.amazonaws.com',  #default
