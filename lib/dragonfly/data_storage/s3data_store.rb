@@ -24,7 +24,7 @@ module Dragonfly
       }
 
       def initialize(opts={})
-        self.cloudfront = opts[:cloudfront_distribution]
+        self.cloudfront_distribution = opts[:cloudfront_distribution]
         self.bucket_name = opts[:bucket_name]
         self.access_key_id = opts[:access_key_id]
         self.secret_access_key = opts[:secret_access_key]
@@ -73,8 +73,8 @@ module Dragonfly
         if opts && opts[:expires]
           storage.get_object_url(bucket_name, uid, opts[:expires])
         else
-          if cloudfront
-            "#{cloudfront}/#{bucket_name}/#{uid}"
+          if cloudfront_distribution
+            "#{cloudfront_distribution}/#{bucket_name}/#{uid}"
           else
             "https://s3.amazonaws.com/#{bucket_name}/#{uid}"
           end
